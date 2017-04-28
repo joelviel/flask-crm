@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    # block head
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Tool to follow-up your customers">
+    <meta name="author" content="Joel Viellepeau">
+    <title>{% block title %}Flask-CRM{% endblock %}</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    # block css
+    # endblock
+    <link rel="stylesheet" href="/css/style.css">
+    # endblock
+  </head>
+  <body>
+
+    # block navbar
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-send"></span> Flask-CRM</a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            # if user
+            <ul class="nav navbar-nav">
+                <li class="{{navbar_home}}"><a href="/">Home</a></li>
+                # if user_is_admin
+                <li class="{{navbar_admin}}"><a href="/admin">Admin</a></li>
+                # endif
+              <!--<li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">More <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Page 1-1</a></li>
+                  <li><a href="#">Page 1-2</a></li>
+                  <li><a href="#">Page 1-3</a></li>
+                </ul>
+              </li>-->
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#" id="recommend-zeus">Recommend this app</a></li>
+              <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{user.email()}}</a></li>
+              <li><a href="{{logout_url}}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>        
+            </ul>
+            # endif
+          </div>
+        </div>
+      </nav>
+
+<div id="dialog-recommend-this-app" title="Recommend this app to a friend">
+  <p>Get 10 points !</p>
+ 
+  <form>
+    <fieldset>
+      <label for="email">Email</label>
+      <input type="text" name="email" id="email-recommended" class="text ui-widget-content ui-corner-all">
+ 
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
+
+
+
+    # endblock
+
+
+    # block header
+    <header class="jumbotron text-center">
+      <h1>Header</h1>
+    </header>
+    # endblock
+    
+
+    <main class="container">
+      # block content
+      # endblock
+    </main>
+    
+    # block js
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+
+<script>
+    
+$(function() {
+    var dialog
+    dialog = $( "#dialog-recommend-this-app" ).dialog({
+      autoOpen: false,
+      height: 300,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Share": function(){                              
+            $.post("recommend",
+            {
+                email: $('#email-recommended').val()
+            },
+            function(data, status){
+              $( "#dialog-recommend-this-app" ).append('<br><p class="lead text-center" style="color:green"><span class="glyphicon glyphicon-envelope"></span> Email sent!</p>')
+              setTimeout(function(){ dialog.dialog( "close" ); }, 1000);
+            }
+            // function(data, status){
+            //   $( "#dialog-recommend-zeus" ).append('<br><p class="lead text-center" style="color:red"><span class="glyphicon glyphicon-envelope"></span> Email invalid!</p>')
+            //   setTimeout(function(){ dialog.dialog( "close" ); }, 1000);
+            // }
+            );
+        },
+        Cancel: function() {
+          dialog.dialog( "close" );
+        }
+      },
+      close: function() {
+
+      }
+    });
+
+    $( "#recommend-zeus" ).on( "click", function() {
+      dialog.dialog( "open" );
+    });
+
+});
+</script>
+
+
+    # endblock
+  </body>
+</html>

@@ -1,0 +1,39 @@
+# extends 'base.html'
+
+
+  # block header
+  # endblock
+  
+
+  # block content
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>User email</th>
+        <th>Nb of customers</th>
+        <th>First login</th>
+        <th>Last visit</th>
+        <th title="+1 if user connects between 2 midnights">KPI</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      # for app_user in app_users
+      <tr>
+        <td>{{app_user.google_account.email()}}</td>
+        <td>{{owners.get(app_user.google_account.email(), 0)}}</td>
+        <td>{{app_user.usage[0].strftime("%Y-%m-%d")}}</td>
+        <td>{{app_user.usage[-1].strftime("%Y-%m-%d")}}</td>
+        <td onclick="alert('{{app_user.usage|join('\n')}}')" style="cursor:pointer">{{app_user.usage|length}}</td>       
+      </tr>
+      # endfor
+      
+    </tbody>
+  </table>
+  
+  # endblock
+
+  # block js
+    {{ super() }}
+  # endblock

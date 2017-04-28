@@ -1,0 +1,34 @@
+# extends 'base.html'
+
+  # block css
+    <link rel="stylesheet" href="/jtable/lib/themes/metro/blue/jtable.css" type="text/css" />
+    <link rel="stylesheet" href="/css/jquery.tagsinput.css" type="text/css" />
+  # endblock
+
+  
+  # block header
+  # endblock
+
+
+
+  # block content
+
+
+    <form>
+        <label>Search: <input type="text" name="search" id="search" placeholder="name, channel, tag.."></label>
+        <button type="submit" id="LoadRecordsButton">Load records</button>
+    </form>
+
+  <br>
+
+    <div id="CustomerTableContainer"></div>
+  # endblock
+
+  # block js
+    {{ super() }}
+    
+    <script src="/jtable/lib/jquery.jtable.js"></script>
+    <script src="/js/jquery.tagsinput.js"></script>
+    <script src="/js/customer.jtable.js"></script>
+
+  # endblock
