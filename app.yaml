@@ -23,7 +23,7 @@ handlers:
   script: main.app
   login: required
 
-- url: /
+- url: /static
   static_dir: static
 
 libraries:

@@ -10,7 +10,7 @@ from flask import Flask, render_template, jsonify, request, redirect, make_respo
 app = Flask(__name__)
 
 app.jinja_env.line_statement_prefix = '#'
-
+app.jinja_env.line_comment_prefix = '##'
 
 ### Constants
 
@@ -232,7 +232,7 @@ def index():
         app_user = AppUser.get_current()
     app_user.update_usage()
     
-    navbar_home = 'active'
+    navbar_customers = 'active'
 
     return render_template('index.html', **locals())
 
@@ -259,10 +259,10 @@ def recommend():
 
         message = mail.EmailMessage(
             sender=sender.email(),
-            subject="I recommend u Zeus")
+            subject="I recommend u this app")
 
         message.to = recipient_email
-        message.body = """Check out http://zeus-1605.appspot.com"""
+        message.body = """Check out http://flask-crm.appspot.com"""
         message.send()
         return jsonify()
 
@@ -310,7 +310,7 @@ def create_customer():
 @app.route('/api/update/customers', methods=['POST'])
 def update_customer():
     app_user = AppUser.get_current()
-    updated_customer, tags_to_be_added,  tags_to_be_deleted = form_to_customer(request.form, decode_safekey(request.form['key']).get())
+    updated_customer, tags_to_be_added, tags_to_be_deleted = form_to_customer(request.form, decode_safekey(request.form['key']).get())
     app_user, put_user, unique_tags_to_be_added, unique_tags_to_be_deleted = app_user.update_tags(tags_to_be_added,  tags_to_be_deleted)
     
     if put_user:
